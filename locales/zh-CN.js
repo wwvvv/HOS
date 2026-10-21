@@ -63,8 +63,8 @@
     new MutationObserver(records=>{
       for(const r of records){
         if(r.type==='characterData'){if(r.target.parentElement)pending.add(r.target.parentElement);}
-        else if(r.type==='childList')for(const n of r.addedNodes)if(n.nodeType===1)pending.add(n);
-        else if(r.type==='attributes')pending.add(r.target);
+        else if(r.type==='childList'){for(const n of r.addedNodes){if(n.nodeType===1)pending.add(n);}}
+        else if(r.type==='attributes'){pending.add(r.target);}
       }
       if(!queued&&pending.size){queued=true;queueMicrotask(flush);}
     }).observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:attrs});
